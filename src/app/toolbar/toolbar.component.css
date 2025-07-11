@@ -1,0 +1,22 @@
+header {
+  height: 40px;
+  padding: 0 25px 0;
+  display: flex;
+  align-items: center;
+  background-color: var(--secondary-color);
+}
+
+.toolbar-section {
+  flex-grow: 1;
+}
+
+.start {
+}
+
+.center {
+  text-align: center;
+}
+
+.end {
+  text-align: end;
+}
