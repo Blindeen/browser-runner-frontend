@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+@import url("./app/components/code-editor/styles.css");
+
 :root {
   --primary-color: #432e54;
   --secondary-color: #7a1cac;
@@ -9,6 +11,7 @@
 body {
   margin: 0;
   height: 100dvh;
+  max-height: 100dvh;
   font-family: "Roboto", sans-serif;
   background-color: var(--primary-color);
   color: var(--text-color);
