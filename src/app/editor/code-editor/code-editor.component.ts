@@ -7,7 +7,7 @@ import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { EditorState } from '@codemirror/state';
 
-import { EditorService } from '../../services/editor.service';
+import { EditorService } from '../editor.service';
 
 @Component({
   selector: 'app-code-editor',

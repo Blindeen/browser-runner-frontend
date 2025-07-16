@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 
-import { ToolbarComponent } from './components/toolbar/toolbar.component';
-import { FooterComponent } from './components/footer/footer.component';
-import { CodeEditorComponent } from './components/code-editor/code-editor.component';
+import { ToolbarComponent } from './editor/toolbar/toolbar.component';
+import { FooterComponent } from './editor/footer/footer.component';
+import { CodeEditorComponent } from './editor/code-editor/code-editor.component';
 
 @Component({
   selector: 'app-root',
