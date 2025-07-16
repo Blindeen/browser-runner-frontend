@@ -8,17 +8,19 @@
 }
 
 .footer-section {
-  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  flex: 1 1 0;
 }
 
 .start {
+  justify-content: start;
 }
 
 .center {
-  text-align: center;
+  justify-content: center;
 }
 
 .end {
-  display: flex;
   justify-content: end;
 }
