@@ -1,7 +1,24 @@
-footer {
+:host {
   height: 30px;
   padding: 0 25px 0;
   display: flex;
   align-items: center;
   background-color: var(--secondary-color);
+  font-size: 13px;
+}
+
+.footer-section {
+  flex-grow: 1;
+}
+
+.start {
+}
+
+.center {
+  text-align: center;
+}
+
+.end {
+  display: flex;
+  justify-content: end;
 }
