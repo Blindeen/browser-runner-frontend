@@ -1,0 +1,21 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  padding: 5px 7px;
+  font-size: 17px;
+  transition: background-color 0.3s;
+  background-color: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+:host:hover {
+  background-color: rgba(201, 209, 209, 0.31);
+}
+
+:host:focus {
+  outline: none;
+}

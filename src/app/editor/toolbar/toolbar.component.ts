@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 
+import { IconButtonComponent } from '../../shared/icon-button/icon-button.component';
+
 @Component({
   selector: 'app-toolbar',
-  imports: [],
+  imports: [IconButtonComponent],
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.css',
 })
