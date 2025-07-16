@@ -1,6 +1,12 @@
-<div class="header-section start"></div>
-<div class="header-section center">BrowserRunner</div>
+<div class="header-section start">
+  <ng-content select="start"></ng-content>
+</div>
+<div class="header-section center">
+  BrowserRunner
+  <ng-content select="center"></ng-content>
+</div>
 <div class="header-section end">
+  <ng-content select="end"></ng-content>
   <button class="icon" type="button" (click)="onRunClick()">
     <i class="fa-solid fa-play"></i>
   </button>

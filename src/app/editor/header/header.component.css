@@ -7,17 +7,19 @@
 }
 
 .header-section {
+  display: flex;
+  align-items: center;
   flex-grow: 1;
 }
 
 .start {
+  justify-content: start;
 }
 
 .center {
-  text-align: center;
+  justify-content: center;
 }
 
 .end {
-  display: flex;
   justify-content: end;
 }
