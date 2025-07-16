@@ -44,6 +44,8 @@ export class CodeEditorComponent {
         state: state,
         parent: el.nativeElement,
       });
+
+      this.view.focus();
     });
   }
 }
