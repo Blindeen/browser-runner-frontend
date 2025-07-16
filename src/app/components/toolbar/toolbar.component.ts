@@ -4,8 +4,10 @@ import { Component } from '@angular/core';
   selector: 'app-toolbar',
   imports: [],
   templateUrl: './toolbar.component.html',
-  styleUrl: './toolbar.component.css'
+  styleUrl: './toolbar.component.css',
 })
 export class ToolbarComponent {
-
+  onRunClick() {
+    console.log('Run!');
+  }
 }

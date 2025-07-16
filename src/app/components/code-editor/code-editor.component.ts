@@ -1,11 +1,13 @@
-import { Component, ElementRef, afterNextRender } from '@angular/core';
+import { Component, ElementRef, afterNextRender, inject } from '@angular/core';
 
 import { basicSetup } from 'codemirror';
-import { EditorView, keymap } from '@codemirror/view';
+import { EditorView, keymap, ViewUpdate } from '@codemirror/view';
 import { defaultKeymap } from '@codemirror/commands';
 import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { EditorState } from '@codemirror/state';
+
+import { EditorService } from '../../services/editor.service';
 
 @Component({
   selector: 'app-code-editor',
@@ -15,9 +17,18 @@ import { EditorState } from '@codemirror/state';
 })
 export class CodeEditorComponent {
   private view?: EditorView;
+  private editorService = inject(EditorService);
 
   constructor(el: ElementRef) {
     afterNextRender(() => {
+      const onChangeListener = EditorView.updateListener.of(
+        (update: ViewUpdate) => {
+          if (update.docChanged) {
+            this.editorService.updateCode(update.state.doc.toString());
+          }
+        }
+      );
+
       const state = EditorState.create({
         doc: '',
         extensions: [
@@ -25,6 +36,7 @@ export class CodeEditorComponent {
           basicSetup,
           oneDark,
           javascript({ typescript: true }),
+          onChangeListener,
         ],
       });
 
