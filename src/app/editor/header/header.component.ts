@@ -3,12 +3,12 @@ import { Component } from '@angular/core';
 import { IconButtonComponent } from '../../shared/icon-button/icon-button.component';
 
 @Component({
-  selector: 'app-toolbar',
+  selector: 'header',
   imports: [IconButtonComponent],
-  templateUrl: './toolbar.component.html',
-  styleUrl: './toolbar.component.css',
+  templateUrl: './header.component.html',
+  styleUrl: './header.component.css',
 })
-export class ToolbarComponent {
+export class HeaderComponent {
   onRunClick() {
     console.log('Run!');
   }

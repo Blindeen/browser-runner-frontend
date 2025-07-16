@@ -1,4 +1,4 @@
-header {
+:host {
   height: 40px;
   padding: 0 25px 0;
   display: flex;
@@ -6,7 +6,7 @@ header {
   background-color: var(--secondary-color);
 }
 
-.toolbar-section {
+.header-section {
   flex-grow: 1;
 }
 

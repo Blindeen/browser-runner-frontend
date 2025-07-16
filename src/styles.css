@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import url("./app/components/code-editor/styles.css");
+@import url("./app/editor/code-editor/styles.css");
 
 :root {
   --primary-color: #432e54;

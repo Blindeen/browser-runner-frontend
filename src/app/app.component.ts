@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { ToolbarComponent } from './editor/toolbar/toolbar.component';
+import { HeaderComponent } from './editor/header/header.component';
 import { FooterComponent } from './editor/footer/footer.component';
 import { CodeEditorComponent } from './editor/code-editor/code-editor.component';
 
@@ -8,6 +8,6 @@ import { CodeEditorComponent } from './editor/code-editor/code-editor.component'
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  imports: [ToolbarComponent, FooterComponent, CodeEditorComponent],
+  imports: [HeaderComponent, FooterComponent, CodeEditorComponent],
 })
 export class AppComponent {}
