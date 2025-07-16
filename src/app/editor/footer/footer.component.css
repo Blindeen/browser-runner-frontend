@@ -6,6 +6,8 @@
   color: var(--text-color);
   background-color: var(--secondary-color);
   font-size: 13px;
+  box-shadow: var(--shadow-color) 0px -3px 8px;
+  z-index: 11;
 }
 
 .footer-section {

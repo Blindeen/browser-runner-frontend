@@ -6,6 +6,7 @@
   --secondary-color: #7a1cac;
   --text-color: #cdcdcd;
   --border-color: #e8bcb9;
+  --shadow-color: rgba(0, 0, 0, 0.24);
 }
 
 body {
