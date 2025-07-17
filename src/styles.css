@@ -16,7 +16,6 @@ body {
   max-height: 100dvh;
   font-family: "Roboto", sans-serif;
   background-color: var(--primary-color);
-  color: var(--text-color);
 }
 
 ::-webkit-scrollbar {

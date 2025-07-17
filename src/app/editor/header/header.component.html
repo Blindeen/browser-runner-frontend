@@ -1,4 +1,5 @@
 <div class="header-section start">
+  <i class="fa-solid fa-terminal logo"></i>
   <ng-content select="start"></ng-content>
 </div>
 <div class="header-section center">
@@ -6,8 +7,14 @@
   <ng-content select="center"></ng-content>
 </div>
 <div class="header-section end">
-  <ng-content select="end"></ng-content>
   <button class="icon" type="button" (click)="onRunClick()">
     <i class="fa-solid fa-play"></i>
   </button>
+  <button class="icon" type="button" (click)="onRunClick()" disabled>
+    <i class="fa-solid fa-bug"></i>
+  </button>
+  <button class="icon" type="button" (click)="onRunClick()" disabled>
+    <i class="fa-solid fa-ellipsis"></i>
+  </button>
+  <ng-content select="end"></ng-content>
 </div>
