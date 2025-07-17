@@ -4,7 +4,16 @@
   flex-direction: column;
 }
 
+header {
+  min-height: 40px;
+}
+
 main {
   flex: 1 1 auto;
   overflow-y: hidden;
+  margin: 5px 0;
+}
+
+footer {
+  min-height: 30px;
 }
