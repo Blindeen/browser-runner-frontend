@@ -35,7 +35,7 @@ export class CodeEditorComponent {
           keymap.of(defaultKeymap),
           basicSetup,
           oneDark,
-          javascript({ typescript: true }),
+          javascript(),
           onChangeListener,
         ],
       });
