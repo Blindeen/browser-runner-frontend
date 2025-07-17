@@ -8,7 +8,7 @@
   transition: background-color 0.3s;
   background-color: transparent;
   border: none;
-  color: white;
+  color: var(--text-color);
   cursor: pointer;
 }
 
@@ -18,4 +18,13 @@
 
 :host:focus {
   outline: none;
+}
+
+:host:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+
+  &:hover {
+    background-color: transparent;
+  }
 }
