@@ -16,21 +16,21 @@ import { EditorService } from '../editor.service';
   styleUrl: './code-editor.component.css',
 })
 export class CodeEditorComponent {
-  private view?: EditorView;
   private editorService = inject(EditorService);
+  private view?: EditorView;
 
   constructor(el: ElementRef) {
     afterNextRender(() => {
       const onChangeListener = EditorView.updateListener.of(
         (update: ViewUpdate) => {
           if (update.docChanged) {
-            this.editorService.updateCode(update.state.doc.toString());
+            this.editorService.code = update.state.doc.toString();
           }
         }
       );
 
       const state = EditorState.create({
-        doc: '',
+        doc: this.editorService.code,
         extensions: [
           keymap.of(defaultKeymap),
           basicSetup,

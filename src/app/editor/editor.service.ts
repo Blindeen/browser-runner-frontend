@@ -14,17 +14,21 @@ interface SubmissionOutput {
 })
 export class EditorService {
   private httpClient = inject(HttpClient);
-  private code = signal('');
+  private codeSignal = signal("console.log('Hello World!');\n");
   private languageId = signal(102);
 
-  updateCode(code: string) {
-    this.code.set(code);
+  get code() {
+    return this.codeSignal();
+  }
+
+  set code(code: string) {
+    this.codeSignal.set(code);
   }
 
   submitCode() {
     this.httpClient
       .post<SubmissionOutput>('/submissions', {
-        sourceCode: this.code(),
+        sourceCode: this.codeSignal(),
         languageId: this.languageId(),
       })
       .subscribe({
