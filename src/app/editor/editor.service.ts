@@ -1,6 +1,5 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { signal, inject } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Injectable, signal, inject } from '@angular/core';
 
 interface SubmissionOutput {
   stdout: string;
@@ -33,10 +32,16 @@ export class EditorService {
       })
       .subscribe({
         next: (submissionOutput) => {
-          console.log(submissionOutput);
+          let message;
+          if (!submissionOutput.compileOutput) {
+            message = `Result: ${submissionOutput.description}\nOutput: ${submissionOutput.stdout}`;
+          } else {
+            message = `Result: ${submissionOutput.description}\nError: ${submissionOutput.compileOutput}`;
+          }
+          alert(message);
         },
-        error: (error) => {
-          console.log(error);
+        error: (errorResponse: HttpErrorResponse) => {
+          alert(errorResponse.error.message);
         },
       });
   }
