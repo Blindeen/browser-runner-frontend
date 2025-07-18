@@ -1,1 +1,28 @@
 /* You can add global styles to this file, and also import other style files */
+@import url("./app/editor/code-editor/styles.css");
+
+:root {
+  --primary-color: #282c34;
+  --secondary-color: #7a1cac;
+  --text-color: #cdcdcd;
+  --border-color: #e8bcb9;
+  --shadow-color: rgba(0, 0, 0, 0.24);
+  --scrollbar-background-color: rgba(78, 86, 102, 0.5);
+}
+
+body {
+  margin: 0;
+  height: 100dvh;
+  max-height: 100dvh;
+  font-family: "Roboto", sans-serif;
+  background-color: var(--primary-color);
+}
+
+::-webkit-scrollbar {
+  background-color: transparent;
+  width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-background-color);
+}
