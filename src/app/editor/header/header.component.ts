@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
+import { EditorService } from '../editor.service';
 import { IconButtonComponent } from '../../shared/icon-button/icon-button.component';
 
 @Component({
@@ -9,7 +10,9 @@ import { IconButtonComponent } from '../../shared/icon-button/icon-button.compon
   styleUrl: './header.component.css',
 })
 export class HeaderComponent {
+  private editorService = inject(EditorService);
+
   onRunClick() {
-    console.log('Run!');
+    this.editorService.submitCode();
   }
 }
