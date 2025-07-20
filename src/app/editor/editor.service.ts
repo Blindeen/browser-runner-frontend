@@ -16,11 +16,19 @@ export class EditorService {
   private codeSignal = signal("console.log('Hello World!');\n");
   private languageId = signal(102);
 
+  constructor() {
+    const savedCode = localStorage.getItem('code');
+    if (savedCode !== null) {
+      this.codeSignal.set(savedCode);
+    }
+  }
+
   get code() {
     return this.codeSignal();
   }
 
   set code(code: string) {
+    localStorage.setItem('code', code);
     this.codeSignal.set(code);
   }
 
