@@ -1,6 +1,8 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, signal, inject } from '@angular/core';
 
+import { environment as env } from '../../environments/environment';
+
 interface SubmissionOutput {
   stdout: string;
   time: string;
@@ -13,11 +15,11 @@ interface SubmissionOutput {
 })
 export class EditorService {
   private httpClient = inject(HttpClient);
-  private codeSignal = signal("console.log('Hello World!');\n");
+  private codeSignal = signal(env.codeFallback);
   private languageId = signal(102);
 
   constructor() {
-    const savedCode = localStorage.getItem('code');
+    const savedCode = localStorage.getItem(env.codeKey);
     if (savedCode !== null) {
       this.codeSignal.set(savedCode);
     }
@@ -28,7 +30,7 @@ export class EditorService {
   }
 
   set code(code: string) {
-    localStorage.setItem('code', code);
+    localStorage.setItem(env.codeKey, code);
     this.codeSignal.set(code);
   }
 
