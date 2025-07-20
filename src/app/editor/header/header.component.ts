@@ -15,4 +15,8 @@ export class HeaderComponent {
   onRunClick() {
     this.editorService.submitCode();
   }
+
+  async onCopyClick() {
+    await this.editorService.copyCode();
+  }
 }

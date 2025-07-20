@@ -45,4 +45,13 @@ export class EditorService {
         },
       });
   }
+
+  async copyCode() {
+    try {
+      await navigator.clipboard.writeText(this.codeSignal());
+      alert("Code's been copied.");
+    } catch {
+      alert('Copying is blocked by the browser policy.');
+    }
+  }
 }
