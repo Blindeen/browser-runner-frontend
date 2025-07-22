@@ -27,6 +27,8 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideHttpClient(withInterceptors([baseInterceptor])),
     provideAnimations(),
-    provideToastr(),
+    provideToastr({
+      positionClass: 'toast-bottom-right',
+    }),
   ],
 };
