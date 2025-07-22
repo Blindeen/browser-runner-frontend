@@ -3,6 +3,7 @@ import { Injectable, signal, inject } from '@angular/core';
 
 import { environment as env } from '../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
+import { finalize } from 'rxjs';
 
 interface SubmissionOutput {
   stdout: string;
@@ -19,6 +20,7 @@ export class EditorService {
   private toastService = inject(ToastrService);
   private codeSignal = signal(env.codeFallback);
   private languageId = signal(102);
+  private isRequestPerformedSignal = signal(false);
 
   constructor() {
     const savedCode = localStorage.getItem(env.codeKey);
@@ -36,12 +38,25 @@ export class EditorService {
     this.codeSignal.set(code);
   }
 
+  get isRequestPerformed() {
+    return this.isRequestPerformedSignal();
+  }
+
+  set isRequestPerformed(value: boolean) {
+    this.isRequestPerformedSignal.set(value);
+  }
+
   submitCode() {
     this.httpClient
       .post<SubmissionOutput>('/submissions', {
         sourceCode: this.codeSignal(),
         languageId: this.languageId(),
       })
+      .pipe(
+        finalize(() => {
+          this.isRequestPerformedSignal.set(false);
+        })
+      )
       .subscribe({
         next: (submissionOutput) => {
           let message;

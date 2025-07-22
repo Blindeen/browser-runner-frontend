@@ -10,9 +10,10 @@ import { IconButtonComponent } from '../../shared/icon-button/icon-button.compon
   styleUrl: './header.component.css',
 })
 export class HeaderComponent {
-  private editorService = inject(EditorService);
+  editorService = inject(EditorService);
 
   onRunClick() {
+    this.editorService.isRequestPerformed = true;
     this.editorService.submitCode();
   }
 
