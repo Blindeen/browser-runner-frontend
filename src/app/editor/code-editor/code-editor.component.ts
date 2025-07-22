@@ -1,10 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  afterNextRender,
-  inject,
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject } from '@angular/core';
 
 import { basicSetup } from 'codemirror';
 import { EditorView, keymap, ViewUpdate } from '@codemirror/view';
@@ -23,7 +17,6 @@ import { EditorService } from '../editor.service';
 })
 export class CodeEditorComponent implements AfterViewInit {
   private editorService = inject(EditorService);
-  private view?: EditorView;
 
   constructor(private hostElement: ElementRef) {}
 
@@ -47,11 +40,11 @@ export class CodeEditorComponent implements AfterViewInit {
       ],
     });
 
-    this.view = new EditorView({
+    const view = new EditorView({
       state: state,
       parent: this.hostElement.nativeElement,
     });
 
-    this.view.focus();
+    view.focus();
   }
 }
