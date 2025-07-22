@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, signal, inject } from '@angular/core';
 
 import { environment as env } from '../../environments/environment';
+import { ToastrService } from 'ngx-toastr';
 
 interface SubmissionOutput {
   stdout: string;
@@ -15,6 +16,7 @@ interface SubmissionOutput {
 })
 export class EditorService {
   private httpClient = inject(HttpClient);
+  private toastService = inject(ToastrService);
   private codeSignal = signal(env.codeFallback);
   private languageId = signal(102);
 
@@ -51,7 +53,9 @@ export class EditorService {
           alert(message);
         },
         error: (errorResponse: HttpErrorResponse) => {
-          alert(errorResponse.error.message);
+          const { error, status } = errorResponse;
+          const message = status !== 0 ? error.message : 'Request failed';
+          this.toastService.error(message, 'Error');
         },
       });
   }
@@ -59,9 +63,9 @@ export class EditorService {
   async copyCode() {
     try {
       await navigator.clipboard.writeText(this.codeSignal());
-      alert("Code's been copied.");
+      this.toastService.success('Code copied to clipboard!', 'Success');
     } catch {
-      alert('Copying is blocked by the browser policy.');
+      this.toastService.error('Access to clipboard denied.', 'Error');
     }
   }
 }
