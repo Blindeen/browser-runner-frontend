@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable, signal, inject } from '@angular/core';
+import { Injectable, signal, inject, NgZone } from '@angular/core';
 
 import { environment as env } from '../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
@@ -21,6 +21,7 @@ export class EditorService {
   private codeSignal = signal(env.codeFallback);
   private languageId = signal(102);
   private isRequestPerformedSignal = signal(false);
+  private ngZone = inject(NgZone);
 
   constructor() {
     const savedCode = localStorage.getItem(env.codeKey);
@@ -70,7 +71,7 @@ export class EditorService {
         error: (errorResponse: HttpErrorResponse) => {
           const { error, status } = errorResponse;
           const message = status !== 0 ? error.message : 'Request failed';
-          requestAnimationFrame(() =>
+          this.ngZone.runOutsideAngular(() =>
             this.toastService.error(message, 'Error')
           );
         },
