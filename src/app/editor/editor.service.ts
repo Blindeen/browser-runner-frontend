@@ -70,7 +70,9 @@ export class EditorService {
         error: (errorResponse: HttpErrorResponse) => {
           const { error, status } = errorResponse;
           const message = status !== 0 ? error.message : 'Request failed';
-          this.toastService.error(message, 'Error');
+          requestAnimationFrame(() =>
+            this.toastService.error(message, 'Error')
+          );
         },
       });
   }
