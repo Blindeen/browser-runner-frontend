@@ -7,9 +7,15 @@
   <ng-content select="center"></ng-content>
 </div>
 <div class="header-section end">
+  @if (editorService.isRequestPerformed) {
+  <button class="icon" type="button">
+    <i class="fa-solid fa-circle-notch fa-spin"></i>
+  </button>
+  } @else {
   <button class="icon" type="button" (click)="onRunClick()">
     <i class="fa-solid fa-play"></i>
   </button>
+  }
   <button class="icon" type="button" disabled>
     <i class="fa-solid fa-bug"></i>
   </button>

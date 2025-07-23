@@ -1,7 +1,9 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable, signal, inject } from '@angular/core';
+import { Injectable, signal, inject, NgZone } from '@angular/core';
 
 import { environment as env } from '../../environments/environment';
+import { ToastrService } from 'ngx-toastr';
+import { finalize } from 'rxjs';
 
 interface SubmissionOutput {
   stdout: string;
@@ -15,8 +17,11 @@ interface SubmissionOutput {
 })
 export class EditorService {
   private httpClient = inject(HttpClient);
+  private toastService = inject(ToastrService);
   private codeSignal = signal(env.codeFallback);
   private languageId = signal(102);
+  private isRequestPerformedSignal = signal(false);
+  private ngZone = inject(NgZone);
 
   constructor() {
     const savedCode = localStorage.getItem(env.codeKey);
@@ -34,12 +39,25 @@ export class EditorService {
     this.codeSignal.set(code);
   }
 
+  get isRequestPerformed() {
+    return this.isRequestPerformedSignal();
+  }
+
+  set isRequestPerformed(value: boolean) {
+    this.isRequestPerformedSignal.set(value);
+  }
+
   submitCode() {
     this.httpClient
       .post<SubmissionOutput>('/submissions', {
         sourceCode: this.codeSignal(),
         languageId: this.languageId(),
       })
+      .pipe(
+        finalize(() => {
+          this.isRequestPerformedSignal.set(false);
+        })
+      )
       .subscribe({
         next: (submissionOutput) => {
           let message;
@@ -51,7 +69,11 @@ export class EditorService {
           alert(message);
         },
         error: (errorResponse: HttpErrorResponse) => {
-          alert(errorResponse.error.message);
+          const { error, status } = errorResponse;
+          const message = status !== 0 ? error.message : 'Request failed';
+          this.ngZone.runOutsideAngular(() =>
+            this.toastService.error(message, 'Error')
+          );
         },
       });
   }
@@ -59,9 +81,9 @@ export class EditorService {
   async copyCode() {
     try {
       await navigator.clipboard.writeText(this.codeSignal());
-      alert("Code's been copied.");
+      this.toastService.success('Code copied to clipboard!', 'Success');
     } catch {
-      alert('Copying is blocked by the browser policy.');
+      this.toastService.error('Access to clipboard denied.', 'Error');
     }
   }
 }

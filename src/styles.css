@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import url("./app/editor/code-editor/styles.css");
+@import url("ngx-toastr/toastr");
 
 :root {
   --primary-color: #282c34;
@@ -25,4 +26,10 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background: var(--scrollbar-background-color);
+}
+
+/* Toast styles */
+.ngx-toastr {
+  background-color: #404754;
+  box-shadow: var(--shadow-color) 0px 3px 8px !important;
 }
