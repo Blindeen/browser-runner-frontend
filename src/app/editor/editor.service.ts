@@ -4,6 +4,7 @@ import { Injectable, signal, inject, NgZone } from '@angular/core';
 import { environment as env } from '../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { finalize } from 'rxjs';
+import { saveAs } from 'file-saver';
 
 interface SubmissionOutput {
   stdout: string;
@@ -18,20 +19,16 @@ interface SubmissionOutput {
 export class EditorService {
   private httpClient = inject(HttpClient);
   private toastService = inject(ToastrService);
-  private codeSignal = signal(env.codeFallback);
   private languageId = signal(102);
   private isRequestPerformedSignal = signal(false);
   private ngZone = inject(NgZone);
+  codeSignal = signal(env.codeFallback);
 
   constructor() {
     const savedCode = localStorage.getItem(env.codeKey);
     if (savedCode !== null) {
       this.codeSignal.set(savedCode);
     }
-  }
-
-  get code() {
-    return this.codeSignal();
   }
 
   set code(code: string) {
@@ -85,5 +82,12 @@ export class EditorService {
     } catch {
       this.toastService.error('Access to clipboard denied.', 'Error');
     }
+  }
+
+  exportCode() {
+    const file = new File([this.codeSignal()], 'browser-runner-code.js', {
+      type: 'text/javascript',
+    });
+    saveAs(file);
   }
 }

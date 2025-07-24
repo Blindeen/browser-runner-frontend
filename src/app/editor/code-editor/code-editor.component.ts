@@ -30,7 +30,7 @@ export class CodeEditorComponent implements AfterViewInit {
     );
 
     const state = EditorState.create({
-      doc: this.editorService.code,
+      doc: this.editorService.codeSignal(),
       extensions: [
         keymap.of(defaultKeymap),
         basicSetup,
