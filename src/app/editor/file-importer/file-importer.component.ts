@@ -23,7 +23,7 @@ export class FileImporterComponent {
       const file = fileList[0];
       const reader = new FileReader();
       reader.onload = () => {
-        this.editorService.code = reader.result as string;
+        this.editorService.importCode(reader.result as string);
       };
       reader.readAsText(file);
     }

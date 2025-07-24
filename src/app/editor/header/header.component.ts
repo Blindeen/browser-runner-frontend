@@ -14,7 +14,7 @@ export class HeaderComponent {
   editorService = inject(EditorService);
 
   onRunClick() {
-    this.editorService.isRequestPerformed = true;
+    this.editorService.isRequestPerformed.set(true);
     this.editorService.submitCode();
   }
 
