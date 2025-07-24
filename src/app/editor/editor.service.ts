@@ -1,9 +1,12 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, signal, inject, NgZone } from '@angular/core';
 
-import { environment as env } from '../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { finalize } from 'rxjs';
+import { saveAs } from 'file-saver';
+import { EditorView } from 'codemirror';
+
+import { environment as env } from '../../environments/environment';
 
 interface SubmissionOutput {
   stdout: string;
@@ -18,44 +21,24 @@ interface SubmissionOutput {
 export class EditorService {
   private httpClient = inject(HttpClient);
   private toastService = inject(ToastrService);
-  private codeSignal = signal(env.codeFallback);
-  private languageId = signal(102);
-  private isRequestPerformedSignal = signal(false);
   private ngZone = inject(NgZone);
+  private languageId = 102;
+  private view!: EditorView;
+  isRequestPerformed = signal(false);
 
-  constructor() {
-    const savedCode = localStorage.getItem(env.codeKey);
-    if (savedCode !== null) {
-      this.codeSignal.set(savedCode);
-    }
-  }
-
-  get code() {
-    return this.codeSignal();
-  }
-
-  set code(code: string) {
-    localStorage.setItem(env.codeKey, code);
-    this.codeSignal.set(code);
-  }
-
-  get isRequestPerformed() {
-    return this.isRequestPerformedSignal();
-  }
-
-  set isRequestPerformed(value: boolean) {
-    this.isRequestPerformedSignal.set(value);
+  setView(view: EditorView) {
+    this.view = view;
   }
 
   submitCode() {
     this.httpClient
       .post<SubmissionOutput>('/submissions', {
-        sourceCode: this.codeSignal(),
-        languageId: this.languageId(),
+        sourceCode: this.view.state.doc.toString(),
+        languageId: this.languageId,
       })
       .pipe(
         finalize(() => {
-          this.isRequestPerformedSignal.set(false);
+          this.isRequestPerformed.set(false);
         })
       )
       .subscribe({
@@ -80,10 +63,33 @@ export class EditorService {
 
   async copyCode() {
     try {
-      await navigator.clipboard.writeText(this.codeSignal());
+      await navigator.clipboard.writeText(this.view.state.doc.toString());
       this.toastService.success('Code copied to clipboard!', 'Success');
     } catch {
       this.toastService.error('Access to clipboard denied.', 'Error');
     }
+  }
+
+  importCode(code: string) {
+    const transaction = this.view.state.update({
+      changes: {
+        from: 0,
+        to: this.view.state.doc.length,
+        insert: code,
+      },
+    });
+    this.view.dispatch(transaction);
+    this.view.focus();
+  }
+
+  exportCode() {
+    const file = new File(
+      [this.view.state.doc.toString()],
+      env.exportFilename,
+      {
+        type: 'text/javascript',
+      }
+    );
+    saveAs(file);
   }
 }
