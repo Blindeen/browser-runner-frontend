@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, inject } from '@angular/core';
+import { environment as env } from '../../../environments/environment';
 
 import { basicSetup } from 'codemirror';
 import { EditorView, keymap, ViewUpdate } from '@codemirror/view';
@@ -11,7 +12,6 @@ import { EditorService } from '../editor.service';
 
 @Component({
   selector: 'app-code-editor',
-  imports: [],
   templateUrl: './code-editor.component.html',
   styleUrl: './code-editor.component.css',
 })
@@ -24,13 +24,14 @@ export class CodeEditorComponent implements AfterViewInit {
     const onChangeListener = EditorView.updateListener.of(
       (update: ViewUpdate) => {
         if (update.docChanged) {
-          this.editorService.code = update.state.doc.toString();
+          const code = update.state.doc.toString();
+          localStorage.setItem(env.codeKey, code);
         }
       }
     );
 
     const state = EditorState.create({
-      doc: this.editorService.codeSignal(),
+      doc: localStorage.getItem(env.codeKey) ?? env.codeFallback,
       extensions: [
         keymap.of(defaultKeymap),
         basicSetup,
@@ -44,7 +45,7 @@ export class CodeEditorComponent implements AfterViewInit {
       state: state,
       parent: this.hostElement.nativeElement,
     });
-
+    this.editorService.setView(view);
     view.focus();
   }
 }
