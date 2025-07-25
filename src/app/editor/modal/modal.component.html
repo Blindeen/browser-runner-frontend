@@ -3,7 +3,7 @@
     <div class="header-start header-section"></div>
     <div class="header-center header-section">Terminal</div>
     <div class="header-end header-section">
-      <button class="icon">
+      <button class="icon" (click)="closeModal()">
         <i class="fa-solid fa-xmark"></i>
       </button>
     </div>
@@ -12,7 +12,7 @@
     <code>
       <div>
         <span>></span>
-        Hello World!
+        {{ editorService.submissionOutput() }}
       </div>
     </code>
     <ng-content></ng-content>

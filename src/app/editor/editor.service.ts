@@ -22,9 +22,11 @@ export class EditorService {
   private httpClient = inject(HttpClient);
   private toastService = inject(ToastrService);
   private ngZone = inject(NgZone);
+
   private languageId = 102;
   private view!: EditorView;
   isRequestPerformed = signal(false);
+  submissionOutput = signal<string | undefined>(undefined);
 
   setView(view: EditorView) {
     this.view = view;
@@ -44,12 +46,12 @@ export class EditorService {
       .subscribe({
         next: (submissionOutput) => {
           let message;
-          if (!submissionOutput.compileOutput) {
-            message = `Result: ${submissionOutput.description}\nOutput: ${submissionOutput.stdout}`;
+          if (submissionOutput.description === 'Accepted') {
+            message = submissionOutput.stdout;
           } else {
-            message = `Result: ${submissionOutput.description}\nError: ${submissionOutput.compileOutput}`;
+            message = submissionOutput.description;
           }
-          alert(message);
+          this.submissionOutput.set(message);
         },
         error: (errorResponse: HttpErrorResponse) => {
           const { error, status } = errorResponse;
