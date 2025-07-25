@@ -1,0 +1,51 @@
+:host {
+  width: 700px;
+  height: 400px;
+  padding: 0;
+  border: none;
+  border-radius: 10px;
+  outline: none;
+  background-color: #21252b9b;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
+    rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+}
+
+.modal-content-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  display: flex;
+  padding: 5px 10px;
+  color: #fff;
+  background-color: #454d5858;
+}
+
+.header-section {
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
+}
+
+.header-start {
+  justify-content: start;
+}
+
+.header-center {
+  justify-content: center;
+  color: var(--text-color);
+}
+
+.header-end {
+  justify-content: end;
+}
+
+.modal-content {
+  flex: 1 1 0;
+  padding: 5px 10px;
+  color: #fff;
+  font-size: 15px;
+  overflow-y: auto;
+}
