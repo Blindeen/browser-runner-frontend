@@ -5,7 +5,6 @@ import { environment as env } from '../../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { finalize } from 'rxjs';
 import { saveAs } from 'file-saver';
-import { EditorView } from 'codemirror';
 
 import { SubmissionOutput, SubmissionResponse } from './types';
 
@@ -17,19 +16,23 @@ export class EditorService {
   private toastService = inject(ToastrService);
   private ngZone = inject(NgZone);
 
-  private languageId = 102;
-  private view!: EditorView;
+  importedCode = signal<string | undefined>(undefined);
   isRequestPerformed = signal(false);
   submissionOutput = signal<SubmissionOutput>(undefined);
+  private languageId = 102;
+  private codeSignal = signal(
+    localStorage.getItem(env.codeKey) ?? env.codeFallback
+  );
 
-  setView(view: EditorView) {
-    this.view = view;
+  set code(code: string) {
+    this.codeSignal.set(code);
+    localStorage.setItem(env.codeKey, code);
   }
 
   submitCode() {
     this.httpClient
       .post<SubmissionResponse>('/submissions', {
-        sourceCode: this.view.state.doc.toString(),
+        sourceCode: this.codeSignal(),
         languageId: this.languageId,
       })
       .pipe(
@@ -59,7 +62,7 @@ export class EditorService {
 
   async copyCode() {
     try {
-      await navigator.clipboard.writeText(this.view.state.doc.toString());
+      await navigator.clipboard.writeText(this.codeSignal());
       this.toastService.success('Code copied to clipboard!', 'Success');
     } catch {
       this.toastService.error('Access to clipboard denied.', 'Error');
@@ -67,25 +70,13 @@ export class EditorService {
   }
 
   importCode(code: string) {
-    const transaction = this.view.state.update({
-      changes: {
-        from: 0,
-        to: this.view.state.doc.length,
-        insert: code,
-      },
-    });
-    this.view.dispatch(transaction);
-    this.view.focus();
+    this.importedCode.set(code);
   }
 
   exportCode() {
-    const file = new File(
-      [this.view.state.doc.toString()],
-      env.exportFilename,
-      {
-        type: 'text/javascript',
-      }
-    );
+    const file = new File([this.codeSignal()], env.exportFilename, {
+      type: 'text/javascript',
+    });
     saveAs(file);
   }
 }
