@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 
-import { EditorService } from '../editor.service';
+import { EditorService } from '../service/editor.service';
 import { IconButtonComponent } from '../../shared/icon-button/icon-button.component';
 import { FileImporterComponent } from '../file-importer/file-importer.component';
 

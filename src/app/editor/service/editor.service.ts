@@ -1,19 +1,13 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, signal, inject, NgZone } from '@angular/core';
+import { environment as env } from '../../../environments/environment';
 
 import { ToastrService } from 'ngx-toastr';
 import { finalize } from 'rxjs';
 import { saveAs } from 'file-saver';
 import { EditorView } from 'codemirror';
 
-import { environment as env } from '../../environments/environment';
-
-interface SubmissionOutput {
-  stdout: string;
-  time: string;
-  description: string;
-  compileOutput: string | null;
-}
+import { SubmissionOutput, SubmissionResponse } from './types';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +20,7 @@ export class EditorService {
   private languageId = 102;
   private view!: EditorView;
   isRequestPerformed = signal(false);
-  submissionOutput = signal<string | undefined>(undefined);
+  submissionOutput = signal<SubmissionOutput>(undefined);
 
   setView(view: EditorView) {
     this.view = view;
@@ -34,7 +28,7 @@ export class EditorService {
 
   submitCode() {
     this.httpClient
-      .post<SubmissionOutput>('/submissions', {
+      .post<SubmissionResponse>('/submissions', {
         sourceCode: this.view.state.doc.toString(),
         languageId: this.languageId,
       })
@@ -44,12 +38,12 @@ export class EditorService {
         })
       )
       .subscribe({
-        next: (submissionOutput) => {
+        next: (submissionResponse) => {
           let message;
-          if (submissionOutput.description === 'Accepted') {
-            message = submissionOutput.stdout;
+          if (submissionResponse.description === 'Accepted') {
+            message = submissionResponse.stdout;
           } else {
-            message = submissionOutput.description;
+            message = submissionResponse.description;
           }
           this.submissionOutput.set(message);
         },

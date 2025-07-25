@@ -8,7 +8,7 @@ import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { EditorState } from '@codemirror/state';
 
-import { EditorService } from '../editor.service';
+import { EditorService } from '../service/editor.service';
 
 @Component({
   selector: 'app-code-editor',
@@ -17,8 +17,7 @@ import { EditorService } from '../editor.service';
 })
 export class CodeEditorComponent implements AfterViewInit {
   private editorService = inject(EditorService);
-
-  constructor(private hostElement: ElementRef) {}
+  private hostEl = inject(ElementRef);
 
   ngAfterViewInit() {
     const onChangeListener = EditorView.updateListener.of(
@@ -43,7 +42,7 @@ export class CodeEditorComponent implements AfterViewInit {
 
     const view = new EditorView({
       state: state,
-      parent: this.hostElement.nativeElement,
+      parent: this.hostEl.nativeElement,
     });
     this.editorService.setView(view);
     view.focus();

@@ -1,7 +1,7 @@
 import { Component, ElementRef, inject, effect } from '@angular/core';
 
 import { IconButtonComponent } from '../../shared/icon-button/icon-button.component';
-import { EditorService } from '../editor.service';
+import { EditorService } from '../service/editor.service';
 
 @Component({
   selector: 'dialog',
