@@ -1,0 +1,28 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  padding: 6px 16px;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: background-color 0.3s;
+}
+
+:host:hover {
+  background-color: #dfe2e2;
+}
+
+:host:active {
+  background-color: #c4c7c7;
+}
+
+i {
+  font-size: 20px;
+}
