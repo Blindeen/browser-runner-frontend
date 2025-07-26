@@ -3,46 +3,41 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { finalize } from 'rxjs';
 
 import { ToastService } from '../../shared/services/toast.service';
-import { SubmissionOutput, SubmissionResponse } from './types';
 import { EditorService } from './editor.service';
+import { SubmissionOutput, SubmissionResponse } from './types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
   private httpClient = inject(HttpClient);
-  private toastService = inject(ToastService);
   private editorService = inject(EditorService);
+  private toastService = inject(ToastService);
 
   isRequestPerformed = signal(false);
   submissionOutput = signal<SubmissionOutput>(undefined);
 
   submitCode() {
-    this.httpClient
+    const submitRequest = this.prepareSubmitRequest();
+    submitRequest.subscribe({
+      next: ({ stdout, description }) => {
+        const message = description === 'Accepted' ? stdout : description;
+        this.submissionOutput.set(message);
+      },
+      error: (errorResponse: HttpErrorResponse) => {
+        const { error, status } = errorResponse;
+        const message = status !== 0 ? error.message : 'Request failed';
+        this.toastService.error(message);
+      },
+    });
+  }
+
+  private prepareSubmitRequest() {
+    return this.httpClient
       .post<SubmissionResponse>('/submissions', {
         sourceCode: this.editorService.codeSignal(),
         languageId: this.editorService.languageId(),
       })
-      .pipe(
-        finalize(() => {
-          this.isRequestPerformed.set(false);
-        })
-      )
-      .subscribe({
-        next: (submissionResponse) => {
-          let message;
-          if (submissionResponse.description === 'Accepted') {
-            message = submissionResponse.stdout;
-          } else {
-            message = submissionResponse.description;
-          }
-          this.submissionOutput.set(message);
-        },
-        error: (errorResponse: HttpErrorResponse) => {
-          const { error, status } = errorResponse;
-          const message = status !== 0 ? error.message : 'Request failed';
-          this.toastService.error(message);
-        },
-      });
+      .pipe(finalize(() => this.isRequestPerformed.set(false)));
   }
 }
