@@ -1,7 +1,8 @@
 import { Component, ElementRef, viewChild, inject } from '@angular/core';
 
 import { IconButtonComponent } from '../../shared/icon-button/icon-button.component';
-import { EditorService } from '../editor.service';
+import { EditorService } from '../services/editor.service';
+import { ToastService } from '../../shared/services/toast.service';
 
 @Component({
   selector: 'app-file-importer',
@@ -11,6 +12,7 @@ import { EditorService } from '../editor.service';
 })
 export class FileImporterComponent {
   private editorService = inject(EditorService);
+  private toastService = inject(ToastService);
   private fileInput = viewChild.required<ElementRef<HTMLInputElement>>('input');
 
   onButtonClick() {
@@ -21,6 +23,10 @@ export class FileImporterComponent {
     const fileList = this.fileInput().nativeElement.files;
     if (fileList?.length === 1) {
       const file = fileList[0];
+      if (!file.name.includes('.js')) {
+        this.toastService.error('JavaScript files are only accepted');
+        return;
+      }
       const reader = new FileReader();
       reader.onload = () => {
         this.editorService.importCode(reader.result as string);

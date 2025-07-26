@@ -6,7 +6,6 @@
   font-size: 17px;
   background-color: var(--secondary-color);
   box-shadow: var(--shadow-color) 0px 3px 8px;
-  z-index: 11;
 }
 
 .header-section {

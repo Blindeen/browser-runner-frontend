@@ -1,0 +1,18 @@
+<div class="modal-content-wrapper">
+  <div class="modal-header">
+    <div class="header-start header-section"></div>
+    <div class="header-center header-section">Terminal</div>
+    <div class="header-end header-section">
+      <button class="icon" (click)="closeModal()">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+  </div>
+  <div class="modal-content">
+    <code>
+      <span>></span>
+      <span>{{ apiService.submissionOutput() }}</span>
+    </code>
+    <ng-content></ng-content>
+  </div>
+</div>
