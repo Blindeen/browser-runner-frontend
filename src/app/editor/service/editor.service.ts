@@ -2,10 +2,10 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, signal, inject, NgZone } from '@angular/core';
 import { environment as env } from '../../../environments/environment';
 
-import { ToastrService } from 'ngx-toastr';
 import { finalize } from 'rxjs';
 import { saveAs } from 'file-saver';
 
+import { ToastService } from '../../shared/services/toast.service';
 import { SubmissionOutput, SubmissionResponse } from './types';
 
 @Injectable({
@@ -13,7 +13,7 @@ import { SubmissionOutput, SubmissionResponse } from './types';
 })
 export class EditorService {
   private httpClient = inject(HttpClient);
-  private toastService = inject(ToastrService);
+  private toastService = inject(ToastService);
   private ngZone = inject(NgZone);
 
   importedCode = signal<string | undefined>(undefined);
@@ -53,9 +53,7 @@ export class EditorService {
         error: (errorResponse: HttpErrorResponse) => {
           const { error, status } = errorResponse;
           const message = status !== 0 ? error.message : 'Request failed';
-          this.ngZone.runOutsideAngular(() =>
-            this.toastService.error(message, 'Error')
-          );
+          this.toastService.error(message);
         },
       });
   }
@@ -63,9 +61,9 @@ export class EditorService {
   async copyCode() {
     try {
       await navigator.clipboard.writeText(this.codeSignal());
-      this.toastService.success('Code copied to clipboard!', 'Success');
+      this.toastService.success('Code copied to clipboard!');
     } catch {
-      this.toastService.error('Access to clipboard denied.', 'Error');
+      this.toastService.error('Access to clipboard denied.');
     }
   }
 
