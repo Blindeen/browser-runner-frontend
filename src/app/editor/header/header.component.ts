@@ -1,8 +1,9 @@
 import { Component, inject } from '@angular/core';
 
-import { EditorService } from '../service/editor.service';
 import { IconButtonComponent } from '../../shared/icon-button/icon-button.component';
 import { FileImporterComponent } from '../file-importer/file-importer.component';
+import { ApiService } from '../services/api.service';
+import { EditorService } from '../services/editor.service';
 
 @Component({
   selector: 'header',
@@ -11,11 +12,12 @@ import { FileImporterComponent } from '../file-importer/file-importer.component'
   styleUrl: './header.component.css',
 })
 export class HeaderComponent {
-  editorService = inject(EditorService);
+  apiService = inject(ApiService);
+  private editorService = inject(EditorService);
 
   onRunClick() {
-    this.editorService.isRequestPerformed.set(true);
-    this.editorService.submitCode();
+    this.apiService.isRequestPerformed.set(true);
+    this.apiService.submitCode();
   }
 
   async onCopyClick() {

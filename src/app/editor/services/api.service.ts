@@ -1,39 +1,27 @@
+import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable, signal, inject, NgZone } from '@angular/core';
-import { environment as env } from '../../../environments/environment';
-
 import { finalize } from 'rxjs';
-import { saveAs } from 'file-saver';
 
 import { ToastService } from '../../shared/services/toast.service';
 import { SubmissionOutput, SubmissionResponse } from './types';
+import { EditorService } from './editor.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class EditorService {
+export class ApiService {
   private httpClient = inject(HttpClient);
   private toastService = inject(ToastService);
-  private ngZone = inject(NgZone);
+  private editorService = inject(EditorService);
 
-  importedCode = signal<string | undefined>(undefined);
   isRequestPerformed = signal(false);
   submissionOutput = signal<SubmissionOutput>(undefined);
-  private languageId = 102;
-  private codeSignal = signal(
-    localStorage.getItem(env.codeKey) ?? env.codeFallback
-  );
-
-  set code(code: string) {
-    this.codeSignal.set(code);
-    localStorage.setItem(env.codeKey, code);
-  }
 
   submitCode() {
     this.httpClient
       .post<SubmissionResponse>('/submissions', {
-        sourceCode: this.codeSignal(),
-        languageId: this.languageId,
+        sourceCode: this.editorService.codeSignal(),
+        languageId: this.editorService.languageId(),
       })
       .pipe(
         finalize(() => {
@@ -56,25 +44,5 @@ export class EditorService {
           this.toastService.error(message);
         },
       });
-  }
-
-  async copyCode() {
-    try {
-      await navigator.clipboard.writeText(this.codeSignal());
-      this.toastService.success('Code copied to clipboard!');
-    } catch {
-      this.toastService.error('Access to clipboard denied.');
-    }
-  }
-
-  importCode(code: string) {
-    this.importedCode.set(code);
-  }
-
-  exportCode() {
-    const file = new File([this.codeSignal()], env.exportFilename, {
-      type: 'text/javascript',
-    });
-    saveAs(file);
   }
 }

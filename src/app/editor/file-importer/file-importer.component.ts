@@ -1,7 +1,7 @@
 import { Component, ElementRef, viewChild, inject } from '@angular/core';
 
 import { IconButtonComponent } from '../../shared/icon-button/icon-button.component';
-import { EditorService } from '../service/editor.service';
+import { EditorService } from '../services/editor.service';
 import { ToastService } from '../../shared/services/toast.service';
 
 @Component({

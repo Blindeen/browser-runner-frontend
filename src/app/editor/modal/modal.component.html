@@ -10,10 +10,8 @@
   </div>
   <div class="modal-content">
     <code>
-      <div>
-        <span>></span>
-        {{ editorService.submissionOutput() }}
-      </div>
+      <span>></span>
+      <span>{{ apiService.submissionOutput() }}</span>
     </code>
     <ng-content></ng-content>
   </div>

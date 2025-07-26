@@ -1,7 +1,7 @@
 import { Component, ElementRef, inject, effect } from '@angular/core';
 
 import { IconButtonComponent } from '../../shared/icon-button/icon-button.component';
-import { EditorService } from '../service/editor.service';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'dialog',
@@ -13,7 +13,7 @@ import { EditorService } from '../service/editor.service';
   },
 })
 export class ModalComponent {
-  editorService = inject(EditorService);
+  apiService = inject(ApiService);
   private hostEl = inject<ElementRef<HTMLDialogElement>>(
     ElementRef<HTMLDialogElement>
   );
@@ -21,7 +21,7 @@ export class ModalComponent {
   constructor() {
     effect(() => {
       const dialogEl = this.hostEl.nativeElement;
-      if (this.editorService.submissionOutput() !== undefined) {
+      if (this.apiService.submissionOutput() !== undefined) {
         dialogEl.showModal();
       } else {
         dialogEl.close();
@@ -30,6 +30,6 @@ export class ModalComponent {
   }
 
   closeModal() {
-    this.editorService.submissionOutput.set(undefined);
+    this.apiService.submissionOutput.set(undefined);
   }
 }
