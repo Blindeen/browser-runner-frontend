@@ -1,1 +1,8 @@
-<ng-content></ng-content>
+<div class="icon-button-content">
+  <ng-content></ng-content>
+  @if (text() !== undefined) {
+  <span class="icon-button-text">
+    {{ text() }}
+  </span>
+  }
+</div>

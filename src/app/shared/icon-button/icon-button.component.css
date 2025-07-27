@@ -28,3 +28,13 @@
     background-color: transparent;
   }
 }
+
+.icon-button-content {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+}
+
+.icon-button-text {
+  font-size: 15px;
+}
