@@ -19,12 +19,14 @@
   <button class="icon" type="button" disabled>
     <i class="fa-solid fa-bug"></i>
   </button>
-  <app-file-importer />
-  <button class="icon" type="button" (click)="onExportClick()">
-    <i class="fa-solid fa-file-arrow-down"></i>
-  </button>
   <button class="icon" type="button" (click)="onCopyClick()">
     <i class="fa-solid fa-copy"></i>
   </button>
+  <app-dropdown>
+    <app-file-importer />
+    <button class="icon" type="button" (click)="onExportClick()">
+      <i class="fa-solid fa-file-arrow-down"></i>
+    </button>
+  </app-dropdown>
   <ng-content select="end"></ng-content>
 </div>

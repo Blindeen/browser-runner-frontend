@@ -4,10 +4,11 @@ import { IconButtonComponent } from '../../shared/icon-button/icon-button.compon
 import { FileImporterComponent } from '../file-importer/file-importer.component';
 import { ApiService } from '../services/api.service';
 import { EditorService } from '../services/editor.service';
+import { DropdownComponent } from '../../shared/dropdown/dropdown.component';
 
 @Component({
   selector: 'header',
-  imports: [IconButtonComponent, FileImporterComponent],
+  imports: [IconButtonComponent, FileImporterComponent, DropdownComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
