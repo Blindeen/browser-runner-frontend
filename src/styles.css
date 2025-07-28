@@ -2,6 +2,15 @@
 @import url("./app/editor/code-editor/styles.css");
 @import url("ngx-toastr/toastr");
 
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 :root {
   --primary-color: #282c34;
   --secondary-color: #7a1cac;
