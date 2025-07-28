@@ -1,0 +1,6 @@
+<button class="icon" (click)="toggle()">
+  <i class="fa-solid fa-ellipsis"></i>
+</button>
+<div class="dropdown-content" [class.open]="isVisible()">
+  <ng-content></ng-content>
+</div>

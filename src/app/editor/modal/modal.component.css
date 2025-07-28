@@ -7,6 +7,11 @@
   outline: none;
   background-color: #21252b9b;
   box-shadow: var(--shadow-color) 0px 3px 8px;
+  animation: fade-in 0.3s;
+}
+
+:host::backdrop {
+  background: none;
 }
 
 .modal-content-wrapper {
