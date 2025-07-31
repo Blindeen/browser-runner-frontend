@@ -1,5 +1,5 @@
 export const environment = {
-  apiUrl: 'http://localhost:3000/api',
+  apiUrl: 'https://browser-runner-backend.onrender.com/api',
   codeFallback: "console.log('Hello World!');\n",
   codeKey: 'code',
   exportFilename: 'browser-runner-code.js',
