@@ -16,17 +16,42 @@
     <i class="fa-solid fa-play"></i>
   </button>
   }
-  <button class="icon" type="button" disabled>
-    <i class="fa-solid fa-bug"></i>
-  </button>
-  <button class="icon" type="button" (click)="onCopyClick()">
-    <i class="fa-solid fa-copy"></i>
-  </button>
-  <app-dropdown>
-    <app-file-importer />
-    <button class="icon" type="button" text="Export" (click)="onExportClick()">
-      <i class="fa-solid fa-file-arrow-down"></i>
+  <div class="end-mobile">
+    <app-dropdown>
+      <button class="icon" type="button" text="Debug" disabled>
+        <i class="fa-solid fa-bug"></i>
+      </button>
+      <button class="icon" type="button" text="Copy" (click)="onCopyClick()">
+        <i class="fa-solid fa-copy"></i>
+      </button>
+      <app-file-importer />
+      <button
+        class="icon"
+        type="button"
+        text="Export"
+        (click)="onExportClick()"
+      >
+        <i class="fa-solid fa-file-arrow-down"></i>
+      </button>
+    </app-dropdown>
+  </div>
+  <div class="end-other">
+    <button class="icon" type="button" disabled>
+      <i class="fa-solid fa-bug"></i>
     </button>
-  </app-dropdown>
-  <ng-content select="end"></ng-content>
+    <button class="icon" type="button" (click)="onCopyClick()">
+      <i class="fa-solid fa-copy"></i>
+    </button>
+    <app-dropdown>
+      <app-file-importer />
+      <button
+        class="icon"
+        type="button"
+        text="Export"
+        (click)="onExportClick()"
+      >
+        <i class="fa-solid fa-file-arrow-down"></i>
+      </button>
+    </app-dropdown>
+  </div>
 </div>

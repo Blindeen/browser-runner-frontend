@@ -12,7 +12,7 @@
   padding: 6px 16px;
   user-select: none;
   -webkit-user-select: none;
-  transition: background-color 0.3s;
+  transition: background-color var(--transition-duration);
 }
 
 :host:hover {

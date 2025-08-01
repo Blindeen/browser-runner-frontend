@@ -26,3 +26,26 @@
   justify-content: end;
   gap: 5px;
 }
+
+.end-mobile {
+  display: none;
+}
+
+.end-other {
+  display: inherit;
+  gap: inherit;
+}
+
+@media (max-width: 520px) {
+  .end-mobile {
+    display: block;
+  }
+
+  .end-other {
+    display: none;
+  }
+
+  .center {
+    flex-grow: 2;
+  }
+}

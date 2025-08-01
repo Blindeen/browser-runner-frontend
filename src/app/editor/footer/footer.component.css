@@ -25,3 +25,11 @@
 .end {
   justify-content: end;
 }
+
+i.fa-square-js {
+  transition: color var(--transition-duration);
+
+  &:hover {
+    color: #f0db4f;
+  }
+}
