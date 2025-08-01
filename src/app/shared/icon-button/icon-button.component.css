@@ -4,7 +4,7 @@
   border-radius: 5px;
   padding: 5px 7px;
   font-size: 17px;
-  transition: background-color 0.3s;
+  transition: background-color var(--transition-duration);
   background-color: transparent;
   border: none;
   color: var(--text-color);
