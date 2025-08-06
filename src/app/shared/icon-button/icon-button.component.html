@@ -1,8 +1,8 @@
 <div class="icon-button-content">
   <ng-content></ng-content>
-  @if (text() !== undefined) {
+  @if (text()?.trim()) {
   <span class="icon-button-text">
-    {{ text() }}
+    {{ text()?.trim() }}
   </span>
   }
 </div>
