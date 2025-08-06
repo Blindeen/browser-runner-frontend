@@ -17,6 +17,7 @@
   --text-color: #cdcdcd;
   --border-color: #e8bcb9;
   --shadow-color: rgba(0, 0, 0, 0.24);
+  --outer-space-color: #404754;
   --scrollbar-background-color: rgba(78, 86, 102, 0.5);
   --transition-duration: 0.3s;
 }
@@ -40,6 +41,6 @@ body {
 
 /* Toast styles */
 .ngx-toastr {
-  background-color: #404754;
+  background-color: var(--outer-space-color);
   box-shadow: var(--shadow-color) 0px 3px 8px !important;
 }

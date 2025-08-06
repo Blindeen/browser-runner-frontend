@@ -8,4 +8,5 @@ import { Component, input } from '@angular/core';
 })
 export class IconButtonComponent {
   text = input<string>();
+  tooltip = input<string>();
 }
