@@ -51,7 +51,7 @@
   border-radius: 6px;
   background-color: var(--outer-space-color);
   font-size: 13px;
-  text-wrap: nowrap;
+  white-space: nowrap;
   box-shadow: var(--shadow-color) 0px 3px 8px;
   animation: fade-in 0.3s;
 

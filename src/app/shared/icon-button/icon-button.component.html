@@ -6,6 +6,6 @@
   </span>
   }
 </div>
-@if (tooltip() !== undefined) {
-<div class="icon-button-tooltip">{{ tooltip() }}</div>
+@if (tooltip()?.trim()) {
+<div class="icon-button-tooltip">{{ tooltip()?.trim() }}</div>
 }
