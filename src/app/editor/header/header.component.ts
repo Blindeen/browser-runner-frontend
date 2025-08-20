@@ -28,4 +28,8 @@ export class HeaderComponent {
   onExportClick() {
     this.editorService.exportCode();
   }
+
+  onFixClick() {
+    console.log('Fix clicked');
+  }
 }
