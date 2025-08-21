@@ -19,8 +19,7 @@ export class ApiService {
 
   submitCode() {
     this.setIsRequestPerformed(true);
-    const submitRequest = this.prepareSubmitRequest();
-    submitRequest.subscribe({
+    this.prepareSubmitRequest().subscribe({
       next: ({ stdout, description }) => {
         const message = description === 'Accepted' ? stdout : description;
         this.submissionOutput.set(message);
@@ -31,8 +30,7 @@ export class ApiService {
 
   fixCode() {
     this.setIsRequestPerformed(true);
-    const fixRequest = this.prepareFixRequest();
-    fixRequest.subscribe({
+    this.prepareFixRequest().subscribe({
       next: ({ code }) => this.editorService.importCode(code),
       error: this.handleError.bind(this),
     });
