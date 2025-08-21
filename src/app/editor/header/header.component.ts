@@ -29,6 +29,6 @@ export class HeaderComponent {
   }
 
   onFixClick() {
-    console.log('Fix clicked');
+    this.apiService.fixCode();
   }
 }

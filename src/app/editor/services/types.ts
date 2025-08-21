@@ -6,3 +6,7 @@ export interface SubmissionResponse {
 }
 
 export type SubmissionOutput = string | undefined;
+
+export interface FixResponse {
+  code: string;
+}
