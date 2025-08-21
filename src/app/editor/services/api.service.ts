@@ -18,7 +18,7 @@ export class ApiService {
   submissionOutput = signal<SubmissionOutput>(undefined);
 
   submitCode() {
-    this.isRequestPerformed.set(true);
+    this.setIsRequestPerformed(true);
     const submitRequest = this.prepareSubmitRequest();
     submitRequest.subscribe({
       next: ({ stdout, description }) => {
@@ -30,12 +30,16 @@ export class ApiService {
   }
 
   fixCode() {
-    this.isRequestPerformed.set(true);
+    this.setIsRequestPerformed(true);
     const fixRequest = this.prepareFixRequest();
     fixRequest.subscribe({
       next: ({ code }) => this.editorService.importCode(code),
       error: this.handleError.bind(this),
     });
+  }
+
+  private setIsRequestPerformed(value: boolean) {
+    this.isRequestPerformed.set(value);
   }
 
   private handleError(errorResponse: HttpErrorResponse) {
@@ -50,7 +54,7 @@ export class ApiService {
         sourceCode: this.editorService.codeSignal(),
         languageId: this.editorService.languageId(),
       })
-      .pipe(finalize(() => this.isRequestPerformed.set(false)));
+      .pipe(finalize(this.setIsRequestPerformed.bind(this, false)));
   }
 
   private prepareFixRequest() {
@@ -58,6 +62,6 @@ export class ApiService {
       .post<FixResponse>('/fix', {
         sourceCode: this.editorService.codeSignal(),
       })
-      .pipe(finalize(() => this.isRequestPerformed.set(false)));
+      .pipe(finalize(this.setIsRequestPerformed.bind(this, false)));
   }
 }
