@@ -17,7 +17,6 @@ export class HeaderComponent {
   private editorService = inject(EditorService);
 
   onRunClick() {
-    this.apiService.isRequestPerformed.set(true);
     this.apiService.submitCode();
   }
 

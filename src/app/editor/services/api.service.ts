@@ -18,6 +18,7 @@ export class ApiService {
   submissionOutput = signal<SubmissionOutput>(undefined);
 
   submitCode() {
+    this.isRequestPerformed.set(true);
     const submitRequest = this.prepareSubmitRequest();
     submitRequest.subscribe({
       next: ({ stdout, description }) => {
