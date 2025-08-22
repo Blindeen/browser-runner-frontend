@@ -7,15 +7,9 @@
   <ng-content select="center"></ng-content>
 </div>
 <div class="header-section end">
-  @if (apiService.isRequestPerformed()) {
-  <button class="icon" type="button">
-    <i class="fa-solid fa-circle-notch fa-spin"></i>
-  </button>
-  } @else {
   <button class="icon" type="button" tooltip="Run code" (click)="onRunClick()">
     <i class="fa-solid fa-play"></i>
   </button>
-  }
   <div class="end-mobile">
     <app-dropdown>
       <button class="icon" type="button" text="Debug" disabled>
@@ -32,6 +26,9 @@
         (click)="onExportClick()"
       >
         <i class="fa-solid fa-file-arrow-down"></i>
+      </button>
+      <button class="icon" type="button" text="Fix" (click)="onFixClick()">
+        <i class="fa-solid fa-hexagon-nodes"></i>
       </button>
     </app-dropdown>
   </div>
@@ -51,6 +48,9 @@
         (click)="onExportClick()"
       >
         <i class="fa-solid fa-file-arrow-down"></i>
+      </button>
+      <button class="icon" type="button" text="Fix" (click)="onFixClick()">
+        <i class="fa-solid fa-hexagon-nodes"></i>
       </button>
     </app-dropdown>
   </div>

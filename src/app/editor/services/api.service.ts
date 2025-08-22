@@ -4,7 +4,7 @@ import { finalize } from 'rxjs';
 
 import { ToastService } from '../../shared/services/toast.service';
 import { EditorService } from './editor.service';
-import { SubmissionOutput, SubmissionResponse } from './types';
+import { FixResponse, SubmissionOutput, SubmissionResponse } from './types';
 
 @Injectable({
   providedIn: 'root',
@@ -18,18 +18,32 @@ export class ApiService {
   submissionOutput = signal<SubmissionOutput>(undefined);
 
   submitCode() {
-    const submitRequest = this.prepareSubmitRequest();
-    submitRequest.subscribe({
+    this.setIsRequestPerformed(true);
+    this.prepareSubmitRequest().subscribe({
       next: ({ stdout, description }) => {
         const message = description === 'Accepted' ? stdout : description;
         this.submissionOutput.set(message);
       },
-      error: (errorResponse: HttpErrorResponse) => {
-        const { error, status } = errorResponse;
-        const message = status !== 0 ? error.message : 'Request failed';
-        this.toastService.error(message);
-      },
+      error: this.handleError.bind(this),
     });
+  }
+
+  fixCode() {
+    this.setIsRequestPerformed(true);
+    this.prepareFixRequest().subscribe({
+      next: ({ code }) => this.editorService.importCode(code),
+      error: this.handleError.bind(this),
+    });
+  }
+
+  private setIsRequestPerformed(value: boolean) {
+    this.isRequestPerformed.set(value);
+  }
+
+  private handleError(errorResponse: HttpErrorResponse) {
+    const { error, status } = errorResponse;
+    const message = status !== 0 ? error.message : 'Request failed';
+    this.toastService.error(message);
   }
 
   private prepareSubmitRequest() {
@@ -38,6 +52,14 @@ export class ApiService {
         sourceCode: this.editorService.codeSignal(),
         languageId: this.editorService.languageId(),
       })
-      .pipe(finalize(() => this.isRequestPerformed.set(false)));
+      .pipe(finalize(this.setIsRequestPerformed.bind(this, false)));
+  }
+
+  private prepareFixRequest() {
+    return this.httpClient
+      .post<FixResponse>('/fix', {
+        sourceCode: this.editorService.codeSignal(),
+      })
+      .pipe(finalize(this.setIsRequestPerformed.bind(this, false)));
   }
 }
