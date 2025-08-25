@@ -33,7 +33,7 @@ export class DropdownComponent {
   }
 
   @HostListener('document:click', ['$event'])
-  private onFocusLoss(e: PointerEvent) {
+  private onFocusLoss(e: MouseEvent) {
     if (this.isVisible() && !this.hostEl.nativeElement.contains(e.target)) {
       this.hide();
     }
