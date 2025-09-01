@@ -1,6 +1,10 @@
-<button class="icon" tooltip="More" (click)="toggle()">
+<button class="icon" tooltip="More" (click)="show()">
   <i class="fa-solid fa-ellipsis"></i>
 </button>
-<div class="dropdown-content" [class.open]="isVisible()">
+<div
+  class="dropdown-content"
+  [class.open]="isVisible()"
+  (click)="onDropdownContentClick($event)"
+>
   <ng-content></ng-content>
 </div>

@@ -18,21 +18,31 @@ export class DropdownComponent {
   private hostEl = inject<ElementRef>(ElementRef);
   isVisible = signal(false);
 
-  toggle() {
-    this.isVisible.update((value) => !value);
+  show() {
+    this.isVisible.set(true);
+  }
+
+  hide() {
+    this.isVisible.set(false);
+  }
+
+  onDropdownContentClick(e: MouseEvent) {
+    if (e.target !== e.currentTarget) {
+      this.hide();
+    }
   }
 
   @HostListener('document:click', ['$event'])
-  private onFocusLoss(e: PointerEvent) {
+  private onFocusLoss(e: MouseEvent) {
     if (this.isVisible() && !this.hostEl.nativeElement.contains(e.target)) {
-      this.toggle();
+      this.hide();
     }
   }
 
   @HostListener('document:keyup.escape')
   private onEscPress() {
     if (this.isVisible()) {
-      this.toggle();
+      this.hide();
     }
   }
 }
